@@ -5,6 +5,8 @@ import time
 # Инициализация Pygame
 pygame.init()
 
+icon = pygame.image.load('icon.jpg')
+pygame.display.set_icon(icon)
 # Размеры экрана
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 900
@@ -19,6 +21,7 @@ player_image = pygame.image.load("player.png")
 bullet_image = pygame.image.load("bullet.png")
 enemy_image = pygame.image.load("enemy.png")
 beam_image = pygame.image.load("beam.png")
+
 
 # Загрузка звуков
 beam_sound = pygame.mixer.Sound("laser.mp3")
@@ -233,7 +236,7 @@ while running:
         running = False
         show_end_screen()
         pygame.display.flip()
-        time.sleep(3)
+        time.sleep(1)
         waiting = True
         while waiting:
             for event in pygame.event.get():
@@ -258,7 +261,7 @@ while running:
         running = False
         show_end_screen()
         pygame.display.flip()
-        time.sleep(3)
+        time.sleep(1)
         waiting = True
         while waiting:
             for event in pygame.event.get():
@@ -276,7 +279,7 @@ while running:
             running = False
             show_end_screen()
             pygame.display.flip()
-            time.sleep(3)
+            time.sleep(2)
         else:
             level += 1
             create_enemies(level)
