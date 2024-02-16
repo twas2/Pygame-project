@@ -36,8 +36,8 @@ BEAM_SIZE = beam_image.get_size()
 # Скорость движения объектов
 SHIP_SPEED = 5
 BULLET_SPEED = 10
-ENEMY_SPEED = 2
-ENEMY_DROP_SPEED = 69 #)))
+ENEMY_SPEED = 3
+ENEMY_DROP_SPEED = 69   # )))
 BEAM_SPEED = 2
 
 clock = pygame.time.Clock()
@@ -116,6 +116,7 @@ class Beam(pygame.sprite.Sprite):
         if self.rect.y > SCREEN_HEIGHT:
             self.kill()
 
+
 # Группы спрайтов
 all_sprites = pygame.sprite.Group()
 enemies = pygame.sprite.Group()
@@ -151,6 +152,47 @@ score = 0
 # Шрифт для отображения счета и сообщений
 font = pygame.font.Font(None, 36)
 
+def show_start_screen():
+    screen.fill((0, 0, 0))
+    font = pygame.font.Font(None, 48)
+    title_text = font.render("Peace indrivers", True, (255, 255, 255))
+    start_text = font.render("Нажмите Enter, чтобы начать", True, (255, 255, 255))
+    screen.blit(title_text, (SCREEN_WIDTH // 2 - title_text.get_width() // 2, SCREEN_HEIGHT // 2 - 50))
+    screen.blit(start_text, (SCREEN_WIDTH // 2 - start_text.get_width() // 2, SCREEN_HEIGHT // 2 + 50))
+    pygame.display.flip()
+
+# Отображение стартового экрана
+def show_end_screen():
+    screen.fill((0, 0, 0))
+    font = pygame.font.Font(None, 48)
+    end_text = font.render("Конец игры", True, (255, 0, 0))
+    restart_text = font.render("Нажмите Enter, чтобы выйти", True, (255, 255, 255))
+    screen.blit(end_text, (SCREEN_WIDTH // 2 - end_text.get_width() // 2, SCREEN_HEIGHT // 2 - 50))
+    screen.blit(restart_text, (SCREEN_WIDTH // 2 - restart_text.get_width() // 2, SCREEN_HEIGHT // 2 + 50))
+    pygame.display.flip()
+
+# Отображение стартового экрана
+show_start_screen()
+
+# Ожидание нажатия клавиши Enter
+waiting = True
+while waiting:
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:
+                waiting = False
+                score = 0
+                level = 1
+                create_enemies(level)
+                show_start_screen()
+
+# Ожидание нажатия клавиши Enter
+waiting = True
+while waiting:
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RETURN:
+                waiting = False
 # Уровень игры
 level = 1
 create_enemies(level)
@@ -169,6 +211,7 @@ while running:
                     all_sprites.add(bullet)
                     bullets.add(bullet)
 
+
     # Обновление спрайтов
     all_sprites.update()
 
@@ -186,6 +229,19 @@ while running:
     enemy_collisions = pygame.sprite.spritecollide(player, enemies, True)
     if enemy_collisions:
         running = False
+        show_end_screen()
+        pygame.display.flip()
+        time.sleep(3)
+        waiting = True
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        waiting = False
+                        score = 0
+                        level = 1
+                        create_enemies(level)
+                        show_start_screen()
 
     # Атака врагов снарядами
     for enemy in enemies:
@@ -198,14 +254,25 @@ while running:
     beam_collisions = pygame.sprite.spritecollide(player, beams, True)
     if beam_collisions:
         running = False
-
+        show_end_screen()
+        pygame.display.flip()
+        time.sleep(3)
+        waiting = True
+        while waiting:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        waiting = False
+                        score = 0
+                        level = 1
+                        create_enemies(level)
+                        show_start_screen()
     # Проверка окончания уровня
     if len(enemies) == 0:
         next_stage_sound.play()
         if level == 3:
             running = False
-            victory_text = font.render("Победа", True, (255, 255, 255))
-            screen.blit(victory_text, (SCREEN_WIDTH // 2 - 50, SCREEN_HEIGHT // 2))
+            show_end_screen()
             pygame.display.flip()
             time.sleep(3)
         else:
@@ -230,4 +297,6 @@ while running:
 
     clock.tick(60)
 
+
 pygame.quit()
+
