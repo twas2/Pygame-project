@@ -152,6 +152,7 @@ score = 0
 # Шрифт для отображения счета и сообщений
 font = pygame.font.Font(None, 36)
 
+
 def show_start_screen():
     screen.fill((0, 0, 0))
     font = pygame.font.Font(None, 48)
@@ -161,15 +162,17 @@ def show_start_screen():
     screen.blit(start_text, (SCREEN_WIDTH // 2 - start_text.get_width() // 2, SCREEN_HEIGHT // 2 + 50))
     pygame.display.flip()
 
+
 # Отображение стартового экрана
 def show_end_screen():
     screen.fill((0, 0, 0))
-    font = pygame.font.Font(None, 48)
-    end_text = font.render("Конец игры", True, (255, 0, 0))
-    restart_text = font.render("Нажмите Enter, чтобы выйти", True, (255, 255, 255))
+    fot = pygame.font.Font(None, 48)
+    end_text = fot.render("Конец игры", True, (255, 0, 0))
+    restart_text = fot.render("Нажмите Enter, чтобы выйти", True, (255, 255, 255))
     screen.blit(end_text, (SCREEN_WIDTH // 2 - end_text.get_width() // 2, SCREEN_HEIGHT // 2 - 50))
     screen.blit(restart_text, (SCREEN_WIDTH // 2 - restart_text.get_width() // 2, SCREEN_HEIGHT // 2 + 50))
     pygame.display.flip()
+
 
 # Отображение стартового экрана
 show_start_screen()
@@ -210,7 +213,6 @@ while running:
                     bullet.rect.y = player.rect.y - BULLET_SIZE[1]
                     all_sprites.add(bullet)
                     bullets.add(bullet)
-
 
     # Обновление спрайтов
     all_sprites.update()
@@ -299,4 +301,3 @@ while running:
 
 
 pygame.quit()
-
