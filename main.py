@@ -5,8 +5,10 @@ import time
 # Инициализация Pygame
 pygame.init()
 
+#создание иконки
 icon = pygame.image.load('icon.jpg')
 pygame.display.set_icon(icon)
+
 # Размеры экрана
 SCREEN_WIDTH = 1200
 SCREEN_HEIGHT = 900
